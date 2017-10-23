@@ -22,6 +22,7 @@ for url in dlist:
     # di production ada baiknya kita masukkan sleep untuk mengurangi waktu unduh
     #sleep(20)
 
+# lawas sengaja ga dibuang dul !
 y=[]
 for html in x:
     soup = BeautifulSoup(html)
@@ -51,6 +52,7 @@ for html in x:
         soup.findAll('img')[11].get('src')
 
 xx=[]
+tag = re.compile('(?:.(?!\())+$')
 for html in x:
     soup = BeautifulSoup(html)
     z={}
@@ -58,17 +60,20 @@ for html in x:
         z['judul']=soup.find('div',{'class':'jdl'}).find('h1').text
         z['date']=soup.find('div',{'class':'jdl'}).find('div',{'class':'date'}).text.lower().replace(',','')
         [s.extract() for s in soup.select("div[class=detail_text]")[0].findAll('script')]
-        z['konten']=soup.select("div[class=detail_text]")[0].text.strip('\n').replace('\n',' ').replace('\t','')
+        isi=soup.select("div[class=detail_text]")[0].text.strip('\n').replace('\n',' ').replace('\t','')
+        z['lokasi']=isi.split('- ')[0]
+        z['konten']=tag.split(isi.split('- ')[1])[0]
+        z['attr']=tag.split(isi.split('- ')[1])[1]    
     except:
         continue
     xx.append(z)
 
 
 # tag
-re.findall(r'(?:.(?!\())+$', i)
+#re.findall(r'(?:.(?!\())+$', i)
 # foto
-re.findall(r'(\(Foto:.*?\))',y[28])
-#url foto
-soup8.findAll('img')[11].get('src')
-#artikel terkait detik
-soup.select("div[class=detail_text]")[0].findAll('div',{'class':'lihatjg'})
+#re.findall(r'(\(Foto:.*?\))',y[28])
+# url foto
+#soup8.findAll('img')[11].get('src')
+# artikel terkait detik
+#soup.select("div[class=detail_text]")[0].findAll('div',{'class':'lihatjg'})
