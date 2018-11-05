@@ -1,6 +1,7 @@
 import urllib2
 from bs4 import BeautifulSoup
 from time import sleep
+import re
 
 # ambil url
 detik = 'https://www.detik.com'
